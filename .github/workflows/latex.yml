@@ -1,0 +1,23 @@
+name: Build LaTeX Document
+on: [push]
+
+jobs:
+  build_latex:
+    runs-on: ubuntu-latest
+    steps:
+      # 1. Clone your repository into the runner
+      - name: Set up Git repository
+        uses: actions/checkout@v4
+
+      # 2. Compile the .tex file using a GitHub Action
+      - name: Compile LaTeX document
+        uses: xu-cheng/latex-action@v3
+        with:
+          root_file: main.tex
+
+      # 3. Save the resulting PDF so you can download it
+      - name: Upload PDF Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: compiled-pdf
+          path: main.pdf
