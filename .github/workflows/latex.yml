@@ -1,23 +1,27 @@
-name: Build LaTeX Document
+name: Build and Commit LaTeX Document
 on: [push]
+
+# Give the workflow permission to write changes back to your repository
+permissions:
+  contents: write
 
 jobs:
   build_latex:
     runs-on: ubuntu-latest
     steps:
-      # 1. Clone your repository into the runner
       - name: Set up Git repository
         uses: actions/checkout@v4
 
-      # 2. Compile the .tex file using a GitHub Action
       - name: Compile LaTeX document
         uses: xu-cheng/latex-action@v3
         with:
           root_file: main.tex
 
-      # 3. Save the resulting PDF so you can download it
-      - name: Upload PDF Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: compiled-pdf
-          path: main.pdf
+      # Commit and push the generated PDF back to the repo
+      - name: Commit and Push PDF
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@://github.com"
+          git add main.pdf
+          git commit -m "Automated build: Update compiled PDF [skip ci]" || echo "No changes to commit"
+          git push
