@@ -1,0 +1,103 @@
+\documentclass[12pt]{extarticle}
+\usepackage{graphicx}
+\usepackage{setspace}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\usepackage{mathrsfs}
+\usepackage{amsthm}
+\usepackage{quiver}
+\usepackage{cleveref}
+\usepackage{xcolor}
+\usepackage{tikz-cd}
+\usepackage{tcolorbox}
+\usepackage[margin=1.1in]{geometry}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{microtype}
+\usepackage{mathtools}
+\large
+\theoremstyle{definition}
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{defi}[thm]{Definition}
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{exc}[thm]{Exercise}
+\newtheorem{exa}[thm]{Example}
+\newtheorem{prob}{Problem}[section]
+
+\pagecolor{black}
+\color{white}
+                        
+\captionsetup{textfont={color=white}, labelfont={color=white}}
+\title{$\operatorname{Gal}(\mathbb{Q}(\zeta_n)/\mathbb{Q})$ and Solvability of Cyclotomic Polynomials}
+\author{Tomiwa}
+\date{October 2026}
+\begin{document}
+
+\newcommand\at[2]{\left.#1\right|_{#2}}
+
+\maketitle
+\doublespacing
+\newcommand{\chapquote}[3]{\begin{quotation} \textit{#1} \end{quotation} \begin{flushright} - #2, \textit{#3}\end{flushright} }
+\setlength{\parindent}{0pt}
+\newcommand{\lt}{ <}
+\newcommand{\gt}{ >}
+\newcommand{\labs}{\left\lvert}
+\newcommand{\rabs}{\right\rvert}
+\newcommand{\dbar}{\bar{\partial}}
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+\newcommand{\img}{\operatorname{im}}
+\newcommand{\gal}{\operatorname{Gal}}
+\begin{thm}[Galois Group of $\mathbb{Q}(\zeta_n)/\mathbb{Q}$]
+$\gal(\mathbb{Q}(\zeta_n)/\mathbb{Q})\cong (\mathbb{Z}/n\mathbb{Z})^{\times}$.
+\end{thm}
+\begin{thm}[Solvability of Cyclotomic Polynomials]
+    The n-th cyclotomic polynomial $\Phi_n(x)$ is solvable by radicals.
+\end{thm}
+\begin{proof}
+We start by proving the cyclotomic polynomial is irreducible over $\mathbb{Z}[x]$.
+\begin{lem}[Gauss' Lemma]
+A polynomial over $\mathbb{Z}[x]$ is irreducible iff it is irreducible over $\mathbb{Q}[x]$ and primitive (gcd of coefficients is 1) over $\mathbb{Z}[x]$.
+\end{lem}
+Firstly, we prove that $\Phi_n(x)$ is primitive over $\mathbb{Z}[x]$.
+\begin{proof}
+We define the n-th cyclotomic polynomial as such: $$x^n-1 = \prod\limits_{d |n} \Phi_d(x)$$ We now use strong induction on n to prove that it's monic, which implies primitive. for $n = 1$, we have $$ \prod\limits_{d |1} \Phi_d(x) = \Phi_1(x)= x-1$$ which is monic. Now let our inductive hypothesis be $\Phi_k(x)$ is monic over $\mathbb{Z}[x]$ $\forall k \le n$. We now prove the n+1 case. $$x^{n+1}-1 = \prod\limits_{d | n+1} \Phi_d(x)$$ Trivially, $n+1 | n+1$ so $$x^{n+1}-1 = \Phi_{n+1}(x)\prod\limits_{d | n+1, d\lt n+1} \Phi_d(x)$$ The rest of the divisors must be $\le n$ so by our inductive hypothesis $\prod\limits_{d | n+1, d\lt n+1} \Phi_d(x)$ is monic as the product of monic polynomials is monic. As $x^{n+1}-1$ is a monic polynomial and is trivially primitive, as the product of two polynomials is only monic if all the factors are monic, $\Phi_{n+1}(x)$ is monic and primitive and that completes our induction.
+\end{proof}
+We now must prove $\Phi_n(x)$ is irreducible over $\mathbb{Z}[x]$.
+\begin{proof}[Proof. (Dedekind, 1857)]
+We prove by contradiction. Assume $\Phi_n(x) = f(x)g(x)$ for monic, non-constant $f(x),g(x) \in  \mathbb{Z}[x]$. Consider some $\zeta^p$ where p does not divide n. $\zeta^p$ is a root of $\Phi_n(x)$, let it not be a root of $f(x)$, so it is a root of $g(x)$. This implies that $\zeta$ is a root of $g(x^p)$ and $f(x)$ divides $g(x^p)$ as f(x) is the minimal polynomial and we reduce to $\mathbb{F}_p[x]$ By the Freshman's Dream $\bar{g}(x^p) = (\bar{g}(x))^p$ and $\bar{f}(x)$ divides $(\bar{g}(x))^p$ and by Euclid's Lemma $\bar{g}(x)$ and $\bar{f}(x)$ share a factor in $\mathbb{F}_p[x]$, meaning their product $\bar{\Phi}(x)$ has a multiple root $\alpha$ over $\mathbb{F}_p$ We know that $\bar{\Phi}(x)$ divides $\overline{x^n-1}$, which has derivative $nx^{n-1}$ so $\alpha^{n-1} = 0 \bmod{p}$ which can't be true as $\alpha$ must be an n-th root of unity, which to the n-th power is 1, but $0\bmod p \neq 1$ when raised to any power, and our initial conditions were that p doesn't divide n so $n \neq 0 \bmod p$. This implies that all $\zeta^p$ must only be roots of f(x) As all k coprime to n are products of these $p$, we have that $f(x)$ has $\phi(n)$ roots, meaning that $\deg(f) = \deg(\Phi)$, so g is constant, creating a clear contradiction, so $\Phi_n(x)$ is irreducible over $\mathbb{Z}[x]$, implying that it is irreducible over $\mathbb{Q}[x]$ by Gauss' Lemma.
+\end{proof}
+Now, we can start to analyze fields and their Galois groups. We adjoin the n-th root of unity $\zeta_n$ to $\mathbb{Q}$ to get our new field extension $\mathbb{Q}(\zeta_n)/\mathbb{Q}$, which is Galois. We have that $[\mathbb{Q}(\zeta_n) :\mathbb{Q}] = \phi(n)$. We can now construct the Galois group $\gal(\mathbb{Q}(\zeta_n)/\mathbb{Q})$, where $|\gal(\mathbb{Q}(\zeta_n)/\mathbb{Q})| = [\mathbb{Q}(\zeta_n) :\mathbb{Q}] = \phi(n)$. We define the field automorphisms of our Galois group to be $\sigma_a \colon \zeta_n \to \zeta^a_n$ where $\gcd(a,n) = 1$.
+We can also have some $\sigma_b \colon \zeta_n \to \zeta^b_n$ such that $\sigma_a \circ \sigma_b \colon \zeta_n \to \zeta_n^{ab}$, but we have that $\zeta^n_n =1$, so we must say that $\sigma_a \circ \sigma_b \colon \zeta_n \to \zeta_n^{ab\bmod n}$. So, consider the group of integers under multiplication mod n $(\mathbb{Z}/n\mathbb{Z})^{\times}$. This group has multiplication mod n, and has $\phi(n)$ elements. So, let us try to find a group isomorphism $f$ between$\gal(\mathbb{Q}(\zeta_n)/\mathbb{Q})$ and $(\mathbb{Z}/n\mathbb{Z})^{\times}$. We define our morphism as $f(\sigma_a) = a\bmod n$. We must prove injectivity, surjectivity, and that it is a homomorphism. It is a homomorphism as $\sigma_a \circ \sigma_b = ab\bmod n$ and $\sigma_{ab} = ab\bmod n$. Notice that we are basically working with the same group, with both finite groups having elements mod n and the same amount of elements. So, we can say that surjectivity implies injectivity and vice versa. We prove that our map is injective by proving that if $f(\sigma_a) = f(\sigma_b)$ then $\sigma_a = \sigma_b$. Firstly, we have $a \bmod n = b \bmod n$. As we only have $\phi(n)$ elements which are all unique, $\zeta^a =\zeta^b$, so $\sigma_a = \sigma_b$. So, our map is injective and surjective, and $f \colon \gal(\mathbb{Q}(\zeta_n)/\mathbb{Q}) \to (\mathbb{Z}/n\mathbb{Z})^{\times} $ is a valid isomorphism so $\gal(\mathbb{Q}(\zeta_n)/\mathbb{Q})\cong (\mathbb{Z}/n\mathbb{Z})^{\times}$. We now prove solvability as  $(\mathbb{Z}/n\mathbb{Z})^{\times}$ is abelian, which implies solvable.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{proof}
+\end{document}
